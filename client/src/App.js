@@ -4,6 +4,7 @@ import WorkerConsole from './Components/workerConsole/WorkerConsole';
 import Login from './Components/Login/Login'
 import Register from './Components/Login/Register';
 import {BrowserRouter as Router, Switch, Route}  from 'react-router-dom'
+import { axiosInstance } from './config'
 
 import TripsTable from "./Components/Manager/TripsTable";
 import Sidebar from "./Components/Manager/Sidebar";
