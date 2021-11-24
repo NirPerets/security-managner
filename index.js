@@ -43,6 +43,7 @@ app.use(session({
 app.use(passport.initialize())
 app.use(passport.session())
 
+app.use(express.static(path.join(__dirname, "./client/build")))
 
 /* ================== PASSPORT =========================== */
 
@@ -124,7 +125,7 @@ app.get('/logged_in', auth,  (req, res) => {
 /* ================== Routes =========================== */
 
 app.get('/', (req, res) => {
-  res.send('Hello World!')
+  res.sendFile(path.join(__dirname, './client/build', 'index.html')) 
 })
 
 app.listen(port, () => {
