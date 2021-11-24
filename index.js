@@ -97,7 +97,7 @@ app.post('/register', async (req, res) => {
 
 app.post('/login', async (req, res) => {
   const { username, password } = req.body;
-  const user = await User.findOne({ username });
+  const user = await User.findOne({ username : username });
 
   await bcrypt.compare(password, user.password, (err, result) => {
     if (err) console.log(err)
