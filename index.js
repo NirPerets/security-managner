@@ -70,11 +70,11 @@ app.post('/register', async (req, res) => {
 
   bcrypt.genSalt(10, (err, salt) => {
     if(err) return next(err)
-    bcrypt.hash(req.body.password, salt, (err, hash) => {
+    bcrypt.hash(req.body.password, salt,null, (err, hash) => {
       if(err) return next(err)
 
       const token = jwt.sign(
-        { user_id: user._id, email },
+        { email : req.body.email },
         process.env.TOKEN_KEY,
         {
           expiresIn: "2h",
@@ -99,24 +99,30 @@ app.post('/login', async (req, res) => {
   const { username, password } = req.body;
   const user = await User.findOne({ username });
 
-  if (user && (await bcrypt.compare(password, user.password))) {
-    // Create token
-    const token = jwt.sign(
-      { user_id: user._id, username },
-      process.env.TOKEN_KEY,
-      {
-        expiresIn: "2h",
+  await bcrypt.compare(password, user.password, (err, result) => {
+    if (err) console.log(err)
+    else {
+      if (user) {
+        // Create token
+        const token = jwt.sign(
+          { user_id: user._id, username },
+          process.env.TOKEN_KEY,
+          {
+            expiresIn: "2h",
+          }
+        );
+    
+        // save user token
+        user.token = token;
+    
+        // user
+        res.status(200).json(user)
+      } else {
+        res.status(400).send("Invalid Credentials");
       }
-    );
+    }
+  })
 
-    // save user token
-    user.token = token;
-
-    // user
-    res.status(200).json(user);
-  }
-
-  res.status(400).send("Invalid Credentials");
 })
 
 app.get('/logged_in', auth,  (req, res) => {
