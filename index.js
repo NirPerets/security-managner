@@ -10,6 +10,7 @@ const cors          = require('cors')
 const jwt           = require("jsonwebtoken");
 const auth          = require('./Middleware/authJWT')
 const schedule      = require('node-schedule')
+const path          = require('path')
 
 require('dotenv').config();
 
