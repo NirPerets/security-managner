@@ -3,7 +3,7 @@ require('./Models/db')
 const express       = require('express')
 const bodyparser    = require('body-parser')
 const session       = require('express-session')
-const bcrypt        = require('bcrypt')
+const bcrypt        = require('bcrypt-nodejs')
 const passport      = require('passport')
 const localStrategy = require('passport-local').Strategy
 const cors          = require('cors')
