@@ -26,18 +26,14 @@ class Home extends Component {
     }
 
     callUser = async () => {
-        const userResponse = await (
-            await fetch(('/user/' + localStorage.getItem('user')),
-            { 
-                headers: {
-                    "x-access-token" : localStorage.getItem('token'),
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
-                } 
-            })
-            ).json();
-        const tripsResponse = await (await fetch(('/user/' + localStorage.getItem('user')) + '/getTrips', { headers: {"x-access-token" : localStorage.getItem('token'), 'Content-Type': 'application/json','Accept': 'application/json'}})).json();
-        const workerResponse = await (await fetch(('/user/' + localStorage.getItem('user')) + '/getWorkers', { headers: {"x-access-token" : localStorage.getItem('token'), 'Content-Type': 'application/json','Accept': 'application/json'}})).json();
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', "x-access-token" : localStorage.getItem('token')}
+        }
+
+        const userResponse = await (await fetch(('/user/' + localStorage.getItem('user')), requestOptions)).json();
+        const tripsResponse = await (await fetch(('/user/' + localStorage.getItem('user')) + '/getTrips', requestOptions)).json();
+        const workerResponse = await (await fetch(('/user/' + localStorage.getItem('user')) + '/getWorkers', requestOptions)).json();
 
         let tempGuards = []
         let tempMedics = []
