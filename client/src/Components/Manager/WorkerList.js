@@ -41,7 +41,12 @@ class WorkerList extends Component {
     }
 
     getWorkers = async () => {
-        const response = await fetch(('/user/' + localStorage.getItem('user')) + '/getWorkers', { headers: {"x-access-token" : localStorage.getItem('token')} });
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', "x-access-token" : localStorage.getItem('token')}
+        }
+
+        const response = await fetch(('/user/' + localStorage.getItem('user')) + '/getWorkers', requestOptions);
         const data = await response.json()
 
         let tempGuards = []

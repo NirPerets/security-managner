@@ -8,7 +8,7 @@ const Trip = mongoose.model('Trip')
 var axios = require('axios');
 const sendSMS = require('../Functions/sms')
 
-router.get('/:id', auth ,(req, res) => {
+router.post('/:id', auth ,(req, res) => {
     User.findById(req.params.id, (err, user) => {
         if(err | !user) res.status(403)
         else res.status(200).send({ user: user })
@@ -176,7 +176,7 @@ router.post('/getTrip', (req, res) => {
     })
 })
 
-router.get('/:id/getWorkers', (req, res) => {
+router.post('/:id/getWorkers', (req, res) => {
     User.findById(
         req.params.id,
         (err, user) => {
@@ -191,7 +191,7 @@ router.get('/:id/getWorkers', (req, res) => {
     )
 })
 
-router.get('/:id/getTrips', (req, res) => {
+router.post('/:id/getTrips', (req, res) => {
     User.findById(
         req.params.id,
         (err, user) => {
@@ -206,7 +206,7 @@ router.get('/:id/getTrips', (req, res) => {
     )
 })
 
-router.get('/:id/getWorkersTrips', (req, res) => { // GET ALL WORKER WITH THEIR TRIPS
+router.post('/:id/getWorkersTrips', (req, res) => { // GET ALL WORKER WITH THEIR TRIPS
     User.findById(
         req.params.id,
         (err, user) => {
@@ -320,7 +320,7 @@ router.post('/:id/:trip', async (req, res) => {
     )
 })
 
-router.get('/:id/checkMobile', async (req, res) => {
+router.post('/:id/checkMobile', async (req, res) => {
     const worker = await Worker.findById('618e56069ce72836b04e7f9f')
     const trip = await Trip.findById('618e417d390d61313ccbd6b6')
 

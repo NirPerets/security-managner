@@ -22,9 +22,14 @@ class TripsTable extends Component {
     }
 
     getTrips = async () => {
-        const response = await fetch(('/user/' + localStorage.getItem('user')) + '/getTrips', { headers: {"x-access-token" : localStorage.getItem('token')} });
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', "x-access-token" : localStorage.getItem('token')}
+        }
+
+        const response = await fetch(('/user/' + localStorage.getItem('user')) + '/getTrips', requestOptions);
         const data = await response.json()
-        console.log(data)
+
         this.setState({
             trips: data,
         })

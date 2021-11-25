@@ -109,7 +109,6 @@ class Home extends Component {
                     <HomeTrips trips={ this.state.trips } title="טיולים אחרונים"/>
                     <NextTrip trip={ this.state.trips[0] }/>
                 </div>
-                <button onClick={ this.checkMobile }>בדיקה בדיקה</button>
             </div>
         )
     }
