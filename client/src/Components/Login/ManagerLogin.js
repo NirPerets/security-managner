@@ -57,7 +57,10 @@ class ManagerLogin extends Component {
                 localStorage.setItem('token', data.token )
                 window.location.href = "/manager/home"
             } else {
-                this.setState({ error: 'משתמש לא קיים או סיסמה שגויה'})
+                this.setState({ 
+                    error: 'משתמש לא קיים או סיסמה שגויה',
+                    showError: true
+                })
             }
         })
     }
