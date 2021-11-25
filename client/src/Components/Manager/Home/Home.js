@@ -77,11 +77,8 @@ class Home extends Component {
     }
 
     checkMobile = async () => {
-        console.log('asddas')
         const check = await fetch(('/user/' + localStorage.getItem('user') + '/checkMobile'), { headers: {"x-access-token" : localStorage.getItem('token')} })
         const data = await check.json()
-
-        console.log(data)
     }
 
     render() {

@@ -45,6 +45,7 @@ app.use(passport.initialize())
 app.use(passport.session())
 
 app.use(express.static(path.join(__dirname, "./client/build")))
+app.get('*', (req, res) => res.sendFile(path.resolve('build', 'index.html')))
 
 /* ================== PASSPORT =========================== */
 
@@ -100,7 +101,7 @@ app.post('/login', async (req, res) => {
   const user = await User.findOne({ username : username });
 
   await bcrypt.compare(password, user.password, (err, result) => {
-    if (err) console.log(err)
+    if (err) res.status(400).send()
     else {
       if (user) {
         // Create token
