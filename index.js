@@ -45,7 +45,6 @@ app.use(passport.initialize())
 app.use(passport.session())
 
 app.use(express.static(path.join(__dirname, "./client/build")))
-app.get('*', (req, res) => res.sendFile(path.resolve('build', 'index.html')))
 
 /* ================== PASSPORT =========================== */
 
@@ -126,15 +125,10 @@ app.post('/login', async (req, res) => {
 
 })
 
-app.get('/logged_in', auth,  (req, res) => {
-  res.status(200).send("Logged");
-})
-
 /* ================== Routes =========================== */
 
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, './client/build', 'index.html')) 
-})
+app.get('/', (req, res) => {res.sendFile(path.join(__dirname, './client/build', 'index.html')) })
+app.get('*', (req, res) => res.sendFile(path.resolve('./client/build', 'index.html')))
 
 app.listen(port, () => {
   mongoose.connect('mongodb+srv://turismo:9976406@turismo.edfha.mongodb.net/Turismo?retryWrites=true&w=majority', {
@@ -148,10 +142,6 @@ app.listen(port, () => {
   }
   })
   console.log(`Example app listening at http://localhost:${port}`)
-})
-
-app.get('/check', (req, res) => {
-  res.send({express: 'EXPRESS BACKEND CONNECTED'})
 })
 
 app.post('/register', (req, res) => {
