@@ -14,7 +14,7 @@ router.post('/login', (req, res) => {
     })
 })
 
-router.get('/:id', (req, res) => {
+router.post('/:id', (req, res) => {
     Worker.findOne({ _id: req.params.id }, (err, worker) => {
         if(err) return res.status(403).send()
         else {

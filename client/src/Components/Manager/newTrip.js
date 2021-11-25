@@ -214,7 +214,12 @@ class newTrip extends Component {
     }
 
     getWorkers = async () => {
-        const response = await fetch(('/user/' + localStorage.getItem('user')) + '/getWorkersTrips', { headers: {"x-access-token" : localStorage.getItem('token')} });
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', "x-access-token" : localStorage.getItem('token')}
+        }
+
+        const response = await fetch(('/user/' + localStorage.getItem('user')) + '/getWorkersTrips', requestOptions);
         const data = await response.json()
         let tempFreeWorkers = data
 
@@ -253,48 +258,6 @@ class newTrip extends Component {
 
         if(startDateToCheck >= startDateObj && startDateToCheck <= endDateObj || endDateToCheck >= startDateObj && endDateToCheck <= endDateObj) return true
         else return false
-    }
-
-    createPdf = () => {
-        const doc = new jsPDF()
-
-        doc.setR2L(true)
-        
-
-        let pdf_index = 10
-        doc.text(("גוף מוציא טיול - " + this.state.tripSender), 10, pdf_index, null, 0, 'right')
-        pdf_index += 10
-        doc.text(("בית ספר - " + this.state.school), 10, pdf_index)
-        pdf_index += 10
-        doc.text(("כיתה - " + this.state.class), 10, pdf_index)
-        pdf_index += 10
-        doc.text(("איש קשר - " + this.state.contact), 10, pdf_index)
-        pdf_index += 10
-        doc.text(("עיר - " + this.state.city), 10, pdf_index)
-        pdf_index += 10
-        doc.text(("אימייל - " + this.state.email), 10, pdf_index)
-        pdf_index += 10
-        doc.text(("סוג שינה - " + this.state.sleep), 10, pdf_index)
-        pdf_index += 10
-        doc.text(("כתובת התייצבות - " + this.state.address), 10, pdf_index)
-        pdf_index += 10
-        doc.text(("איזור טיול - " + this.state.area), 10, pdf_index)
-        pdf_index += 10
-        doc.text(("תאריך - " + this.state.startDate + " - " + this.state.finishDate), 10, pdf_index)
-        pdf_index += 10
-        doc.text(("עובדים - "), 10, pdf_index)
-        pdf_index += 10
-        this.state.guards.forEach(guard => {
-            doc.text((guard.fullName + ' - מאבטח : ' + guard.phone), 10, pdf_index)
-            pdf_index += 10
-        })
-
-        this.state.medics.forEach(medic => {
-            doc.text((medic.fullName + ' - חובש : ' + medic.phone), 10, pdf_index)
-            pdf_index += 10
-        })
-
-        doc.save('trip.pdf')
     }
 
     componentDidMount() {

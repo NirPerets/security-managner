@@ -5,7 +5,7 @@ const mongoose = require('mongoose')
 const Trip = mongoose.model('Trip')
 const User = mongoose.model('User')
 
-router.get('/', (req, res) => { // Get all trips
+router.post('/', (req, res) => { // Get all trips
     Trip.find((err, docs) => {
         if(!err) {
             res.send({trips : docs})
@@ -28,7 +28,7 @@ router.post('/companyTrips', auth, (req,res) => {
     })
 })
 
-router.get('/:id', (req, res) => {
+router.post('/:id', (req, res) => {
     Trip.findById(req.params.id, (err, doc) => {
         if(!err) {
             res.send({ trip: doc })
@@ -38,7 +38,7 @@ router.get('/:id', (req, res) => {
     })
 })
 
-router.get("/delete/:id", (req, res) => {
+router.post("/delete/:id", (req, res) => {
     Trip.findByIdAndRemove(req.params.id, (err, doc) => {
         if(!err) {
             doc.guards.forEach(item => {
