@@ -107,10 +107,10 @@ class WorkerList extends Component {
                             {
                                 this.state.guards.map(item => {
                                     return(
-                                        <tr onClick={ () => this.openWorkerModal(item,"מאבטח") }>
+                                        <tr className={ this.item.status ? 'active' : ''} onClick={ () => this.openWorkerModal(item,"מאבטח") }>
                                             <td>{ item.fullName }</td>
                                             <td>{ item.status ? 'בעבודה' : 'פנוי' }</td>
-                                            <td>{ 100 }</td>
+                                            <td>{ item.trips.length  }</td>
                                             <td>{ item.address }</td>
                                             <td>{ item.phone }</td>
                                         </tr>
@@ -122,10 +122,10 @@ class WorkerList extends Component {
                             {
                                 this.state.medics.map(item => {
                                     return(
-                                        <tr onClick={ () => this.openWorkerModal(item,"חובש") }>
+                                        <tr className={ this.item.status ? 'active' : ''} onClick={ () => this.openWorkerModal(item,"חובש") }>
                                             <td>{ item.fullName }</td>
                                             <td>{ item.status ? 'בעבודה' : 'פנוי' }</td>
-                                            <td>{ 100 }</td>
+                                            <td>{ item.trips.length }</td>
                                             <td>{ item.address }</td>
                                             <td>{ item.phone }</td>
                                         </tr>

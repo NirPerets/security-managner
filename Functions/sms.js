@@ -10,12 +10,7 @@ function sendSMS(trip, worker) {
         </User>
         <Content Type="sms">
             <Message>
-                שלום ${ worker.fullName },
-                הנך משובץ לטיול ${ trip.body } בתפקיד ${ worker.job == 'guard' ? 'מאבטח' : 'חובש' } עם ${ trip.school} 
-                בתאריכים ${ trip.startDate } - ${ trip.finishDate }, סוג הלינה הוא ${ trip.sleep } 
-                איש קשר: ${ trip.contact }
-                כתובת התייצבות: ${ trip.address } בשעה ${ trip.hour }
-                לאישור קבלה השב - אישור
+                שלום ${ worker.fullName }, הנך משובץ לטיול ${ trip.body } בתפקיד ${ worker.job == 'guard' ? 'מאבטח' : 'חובש' } עם ${ trip.school}. בתאריכים ${ trip.startDate } - ${ trip.finishDate }, סוג הלינה הוא ${ trip.sleep } איש קשר: ${ trip.contact } כתובת התייצבות: ${ trip.address } בשעה ${ trip.hour } לאישור קבלה השב - אישור
             </Message>
         </Content>
         <Recipients>

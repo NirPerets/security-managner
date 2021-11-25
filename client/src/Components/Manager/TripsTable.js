@@ -122,7 +122,7 @@ class TripsTable extends Component {
                             {
                                 this.state.trips.map(item => {
                                     return(
-                                        <tr className={ checkTripActive(item.startDate, item.finishDate) ? 'active' : ''} onClick={() => this.setModal(item)}>
+                                        <tr className={ item.status ? 'active' : ''} onClick={() => this.setModal(item)}>
                                             <td>{ item.body + " " + item.class }</td>
                                             <td>{ item.city }</td>
                                             <td>{ item.startDate }</td>
