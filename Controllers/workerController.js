@@ -27,4 +27,40 @@ router.post('/:id', (req, res) => {
     })
 })
 
+router.post('/:id/free', (req, res) => {
+    Worker.updateOne(
+        { _id: req.params.id},
+        { free: true},
+        (err, result) => {
+            if(err) console.log(err)
+            else return res.status(200).send()
+        }
+    )
+})
+
+router.post('/:id/towork', (req, res) => {
+    Worker.updateOne(
+        { _id: req.params.id},
+        { free: false},
+        (err, result) => {
+            if(err) console.log(err)
+            else return res.status(200).send()
+        }
+    )
+})
+
+router.post('/:id/acceptTrip', (req, res) => {
+    Worker.updateOne(
+        { _id: req.params.id },
+        { $push : { acceptedTrips : req.body.trip }},
+        (err, result) => {
+            if(err) console.log(err)
+            else {
+                console.log(result)
+                return res.status(200).send()
+            }
+        }
+    )
+})
+
 module.exports = router

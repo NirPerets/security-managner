@@ -25,7 +25,7 @@ class Login extends Component {
                     <div className="login-container">
                         <div className="login-heading">
                             <button onClick={ this.activateManager } className={"select " + (this.state.showManager ? 'active' : '')}>מנהל</button>
-                            {/*<button onClick={ this.activateWorker } className={"select " + (!this.state.showManager ? 'active' : '')}>עובד</button>*/}
+                            <button onClick={ this.activateWorker } className={"select " + (!this.state.showManager ? 'active' : '')}>עובד</button>
                         </div>
                         <div className="login-inside">
                             { this.state.showManager ? <ManagerLogin setUser={ this.props.setUser } /> : <WorkerLogin setUser={ this.props.setUser } />}

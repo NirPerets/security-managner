@@ -4,6 +4,8 @@ import SuccessModal from "./successModal";
 import InputRow from "../InputRow";
 import MapInput from "../mapInput";
 import iconPlus from '../../Icons/iconPlus'
+import iconCheck from "../../Icons/iconCheck";
+import iconX from "../../Icons/iconX";
 
 class TripModal extends Component {
 
@@ -94,7 +96,8 @@ class TripModal extends Component {
             tempAvailableWorkers = data
 
             tempAvailableWorkers.forEach(worker => {
-                worker.trips.forEach((trip, i) => {
+                if(worker.free) tempAvailableWorkers = tempAvailableWorkers.filter(workerToFilter => workerToFilter !== worker)
+                worker.trips.forEach((trip) => {
                     if(this.compareDateRange(trip.startDate, trip.finishDate)) {
                         tempAvailableWorkers = tempAvailableWorkers.filter(workerToFilter => workerToFilter !== worker)
                     } 
@@ -289,7 +292,12 @@ class TripModal extends Component {
                                                 <td>{ guard.fullName }</td>
                                                 <td>מאבטח</td>
                                                 <td>{ guard.phone }</td>
-                                                <td></td>
+                                                <td>
+                                                    {
+                                                        guard.acceptedTrips.includes(this.props.trip._id) ?
+                                                        <div class="accept-icon">{ iconCheck }</div> : <div class="unaccept-icon">{ iconX }</div>
+                                                    }
+                                                </td>
                                             </tr>
                                         )
                                     })
@@ -301,7 +309,12 @@ class TripModal extends Component {
                                                 <td>{ medic.fullName }</td>
                                                 <td>חובש</td>
                                                 <td>{ medic.phone }</td>
-                                                <td></td>
+                                                <td>
+                                                    {
+                                                        medic.acceptedTrips.includes(this.props.trip._id) ?
+                                                        <div class="accept-icon">{ iconCheck }</div> : <div class="unaccept-icon">{ iconX }</div>
+                                                    }
+                                                </td>
                                             </tr>
                                         )
                                     })
@@ -368,7 +381,12 @@ class TripModal extends Component {
                                             <td>{ guard.fullName }</td>
                                             <td>מאבטח</td>
                                             <td>{ guard.phone }</td>
-                                            <td></td>
+                                            <td>
+                                                {
+                                                    guard.acceptedTrips.includes(this.props.trip._id) ?
+                                                    <div class="accept-icon">{ iconCheck }</div> : <div class="unaccept-icon">{ iconX }</div>
+                                                }
+                                            </td>
                                         </tr>
                                     )
                                 })
@@ -380,7 +398,12 @@ class TripModal extends Component {
                                             <td>{ medic.fullName }</td>
                                             <td>חובש</td>
                                             <td>{ medic.phone }</td>
-                                            <td></td>
+                                            <td>
+                                                {
+                                                    medic.acceptedTrips.includes(this.props.trip._id) ?
+                                                    <div class="accept-icon">{ iconCheck }</div> : <div class="unaccept-icon">{ iconX }</div>
+                                                }
+                                            </td>
                                         </tr>
                                     )
                                 })

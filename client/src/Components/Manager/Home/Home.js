@@ -45,11 +45,11 @@ class Home extends Component {
         await workerResponse.forEach(worker => {
             if(worker.job == 'guard') {
                 tempGuards.push(worker)
-                if(!worker.status) freeGuardsCount++
+                if(!worker.status && !worker.free) freeGuardsCount++
             }
             else if (worker.job == 'medic') {
                 tempMedics.push(worker)
-                if(!worker.status) freeMedicsCount++
+                if(!worker.status && !worker.free) freeMedicsCount++
             }
             else if (worker.job == 'double') {
                 tempGuards.push(worker)
@@ -78,7 +78,6 @@ class Home extends Component {
 
     async componentDidMount() {
         await this.callUser()
-        console.log(this.state.trips)
     }
 
     checkMobile = async () => {

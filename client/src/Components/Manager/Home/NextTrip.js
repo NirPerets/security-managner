@@ -8,11 +8,7 @@ class NextTrip extends Component {
     constructor(props) {
         super(props)
     }
-
-    componentDidMount() {
-        console.log(this.props.trip)
-    }
-
+    
     render() {
 
         if(this.props.trip == null) {

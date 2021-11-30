@@ -1,6 +1,27 @@
 import { Component } from "react";
+import iconCheck from "../../Icons/iconCheck";
 
 class WorkerInfo extends Component {
+
+    componentDidMount() {
+        console.log(this.props.worker)
+    }
+
+    acceptTrip = async (trip) => {
+        console.log(trip._id)
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                trip: trip._id
+            })
+        };
+
+        const response = await fetch(('/worker/' + localStorage.getItem('worker') + '/acceptTrip'), requestOptions);
+        const data = await response.json();
+        console.log(data)
+    }
+
     render() {
         return(
             <div className="worker-right">
@@ -47,6 +68,13 @@ class WorkerInfo extends Component {
                                             <td><p>{ trip.startDate }</p></td>
                                             <td><p>{ trip.area }</p></td>
                                             <td><p>{ trip.contact }</p></td>
+                                            <td>
+                                                {
+                                                    this.props.worker.acceptedTrips.includes(trip._id) ?
+                                                    <div class="accept-icon">{iconCheck}</div> :
+                                                    <button className="accept-trip" onClick={ () => this.acceptTrip(trip) }>אשר הגעה</button>
+                                                }
+                                            </td>
                                         </tr>
                                     )
                                 })

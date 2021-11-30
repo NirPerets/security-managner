@@ -48,13 +48,34 @@ class WorkerModal extends Component {
         fetch(('/user/' + localStorage.getItem('user') + '/getWorkerTrips'), requestOptions)
         .then(response => response.json())
         .then(data => {
-            console.log(data)
             this.setState({ 
                 showLoading: false, 
                 trips: data,
                 worker: this.props.worker
             })
         })
+    }
+
+    setFreeWorker = () => {
+        this.setState({showLoading: true})
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' , "x-access-token" : localStorage.getItem('token') },
+        }
+
+        fetch(('/worker/' + this.props.worker._id + '/free'), requestOptions)
+        .then(response => this.setState({showLoading: false}))
+    }
+
+    setWorkerToWork = () => {
+        this.setState({showLoading: true})
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' , "x-access-token" : localStorage.getItem('token') },
+        }
+
+        fetch(('/worker/' + this.props.worker._id + '/towork'), requestOptions)
+        .then(response => this.setState({showLoading: false}))
     }
 
     componentDidMount() {
@@ -95,7 +116,7 @@ class WorkerModal extends Component {
                             </div>
                             <div className="block">
                                 <h1>סטטוס</h1>
-                                <p>{ this.props.worker.status }</p>
+                                <p>{ this.props.worker.free ? 'בחופש' : this.props.worker.status ? 'בעבודה' : 'פנוי' }</p>
                             </div>
                             <div className="block">
                                 <h1>כתובת</h1>
@@ -135,6 +156,12 @@ class WorkerModal extends Component {
                                 }
                             </tbody>
                         </table>
+                        {
+                            this.props.worker.free ?
+                            <button onClick={ this.setWorkerToWork } className="btn close delete-trip">החזר עובד מחופש</button>
+                            :
+                            <button onClick={ this.setFreeWorker } className="btn close delete-trip">הוצא עובד לחופש</button>
+                        }
                         <button onClick={ this.deleteWorker } className="btn close delete-trip">הסר עובד</button>
                     </div>
                 </>

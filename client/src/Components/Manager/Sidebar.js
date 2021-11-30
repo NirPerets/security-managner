@@ -41,11 +41,6 @@ class Sidebar extends Component {
                             </NavLink>
                         </li>
                     </div>
-
-                    <div className="help">
-                        <a href="#">עזרה</a>
-                        <a href="#">צור קשר</a>
-                    </div>
                 </div>
             </>
         )

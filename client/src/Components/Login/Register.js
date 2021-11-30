@@ -3,6 +3,7 @@ import loginBG from '../../login-bg.jpg'
 import usersIcon from '../../Icons/iconUsers'
 import emailIcon from '../../Icons/iconEmail'
 import passwordIcon from '../../Icons/iconPassword'
+import iconKey from '../../Icons/iconKey'
 import { Redirect, Link }  from 'react-router-dom'
 
 class Register extends Component {
@@ -11,6 +12,8 @@ class Register extends Component {
         name: '',
         email: '',
         password: '',
+        key: '',
+        keyWrite: false,
         passWrite: false,
         emailWrite: false,
         nameWrite: false,
@@ -51,6 +54,17 @@ class Register extends Component {
           }));
     }
 
+    handleKey = (e) => {
+        this.setState({key: e.target.value})
+    }
+
+    keyInput = () => {
+        this.setState(prevState => ({
+            keyWrite: !prevState.keyWrite
+          }));
+    }
+
+
     validation = () => {
 
     }
@@ -70,13 +84,13 @@ class Register extends Component {
                 username: this.state.name,
                 email: this.state.email,
                 password: this.state.password,
+                key: this.state.key
             })
         };
 
         fetch('/register', requestOptions)
         .then(response => response.json())
         .then(data => {
-           console.log(data)
            if(data.message === 'User already exists') {
                this.setState({
                    showError: true,
@@ -135,22 +149,40 @@ class Register extends Component {
                                     </div>
 
                                     <div className={
-                                        "input-row " + (this.state.passWrite ? 'focused ' : '') +
-                                        (this.state.password != '' ? 'focused' : '')
-                                        }>
-                                        <div className="icon-container">
-                                            { passwordIcon }
+                                            "input-row " + (this.state.passWrite ? 'focused ' : '') +
+                                            (this.state.password != '' ? 'focused' : '')
+                                            }>
+                                            <div className="icon-container">
+                                                { passwordIcon }
+                                            </div>
+                                            <div className="input-container">
+
+                                            <label>סיסמא</label>
+                                            <input type="password" value={this.state.password} 
+                                            onFocus={this.passwordInput} 
+                                            onBlur={this.passwordInput} 
+                                            onChange={ this.handlePassword } />
+
                                         </div>
-                                        <div className="input-container">
-
-                                        <label>סיסמא</label>
-                                        <input type="password" value={this.state.password} 
-                                        onFocus={this.passwordInput} 
-                                        onBlur={this.passwordInput} 
-                                        onChange={ this.handlePassword } />
-
                                     </div>
-                                </div>
+
+                                    <div className={
+                                            "input-row " + (this.state.keyWrite ? 'focused ' : '') +
+                                            (this.state.key != '' ? 'focused' : '')
+                                            }>
+                                            <div className="icon-container">
+                                                { iconKey }
+                                            </div>
+                                            <div className="input-container">
+
+                                            <label>מפתח</label>
+                                            <input type="text" value={this.state.key} 
+                                            onFocus={this.keyInput} 
+                                            onBlur={this.keyInput} 
+                                            onChange={ this.handleKey } />
+
+                                        </div>
+                                    </div>
 
                             <div className={"error-container " + (this.state.showError ? 'show' : '')}>{ this.state.error }</div>
                             <button onClick={this.submitForm} type="submit" className="submit">הירשם</button>

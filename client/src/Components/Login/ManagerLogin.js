@@ -39,6 +39,10 @@ class ManagerLogin extends Component {
     submitForm = async (e) => {
         e.preventDefault()
 
+        if(this.state.username == '' || this.state.password == '') {
+            return this.setState({error: 'משתמש לא קיים או סיסמה שגויה', showError: true})
+        }
+
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -50,15 +54,21 @@ class ManagerLogin extends Component {
 
         fetch('/login', requestOptions)
         .then(async response => {
-            const data = await response.json()
-
-            if(data._id != null) {
-                this.props.setUser(data)
-                localStorage.setItem('token', data.token )
-                window.location.href = "/manager/home"
+            if(response.status == '200') {
+                const data = await response.json()
+                if(data._id != null) {
+                    this.props.setUser(data)
+                    localStorage.setItem('token', data.token )
+                    window.location.href = "/manager/home"
+                } else {
+                    this.setState({ 
+                        error: 'סיסמא שגויה',
+                        showError: true
+                    })
+                }
             } else {
                 this.setState({ 
-                    error: 'משתמש לא קיים או סיסמה שגויה',
+                    error: 'משתמש לא קיים',
                     showError: true
                 })
             }

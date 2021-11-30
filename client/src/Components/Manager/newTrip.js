@@ -48,7 +48,7 @@ class newTrip extends Component {
     validation = () => {
         let errors = []
         if(this.state.stage === "1") {
-            if(this.state.tripSender === "") {errors.push('tripSender')}
+            /*if(this.state.tripSender === "") {errors.push('tripSender')}
             if(this.state.school === "") {errors.push('school')}
             if(this.state.class === "") {errors.push('class')}
             if(this.state.city === "") { errors.push('city') }
@@ -60,7 +60,7 @@ class newTrip extends Component {
             if(this.state.meetAddress === "") {errors.push('meetAddress')}
             if(this.state.meetAddress === "") {errors.push('contact')}
             if(this.state.sleep === "") {errors.push('sleep')}
-            if(this.state.email === "") {errors.push('email')}
+            if(this.state.email === "") {errors.push('email')}*/
         } else if (this.state.stage === "2") {
             if(this.state.guards.length !== this.state.guardCount ) {errors.push('guards')}
         } else if (this.state.stage === "3") {
@@ -116,7 +116,7 @@ class newTrip extends Component {
     }
 
     nextStage = async () => {
-       //await this.validation()
+       await this.validation()
 
         if(this.state.errors.length === 0) {
             await this.setState({ 
@@ -228,6 +228,7 @@ class newTrip extends Component {
 
 
         await tempFreeWorkers.forEach(worker => {
+            if(worker.free) tempFreeWorkers = tempFreeWorkers.filter(workerToFilter => workerToFilter !== worker)
             worker.trips.forEach(trip => {
                 if(this.compareDateRange(trip.startDate, trip.finishDate)) {
                     tempFreeWorkers = tempFreeWorkers.filter(workerToFilter => workerToFilter !== worker)
@@ -297,11 +298,11 @@ class newTrip extends Component {
                             <div className="inputs">
                                 <div className="right">
                                     <InputRow handleInputChange={ this.handleInputChange } label="גוף מוציא טיול" id="tripSender" isError={this.state.errors.includes('tripSender') ? true : false} />
-                                    <InputRow handleInputChange={ this.handleInputChange } label="שם בית ספר" id="school" isError={this.state.errors.includes('school') ? true : false} />
+                                    <InputRow handleInputChange={ this.handleInputChange } label="שם מוסד" id="school" isError={this.state.errors.includes('school') ? true : false} />
                                     <InputRow handleInputChange={ this.handleInputChange } label="כיתה" id="class" isError={this.state.errors.includes('class') ? true : false} />
                                     <InputRow handleInputChange={ this.handleInputChange } label="עיר" id="city" isError={this.state.errors.includes('city') ? true : false} />
                                     <InputRow handleInputChange={ this.handleInputChange } label="אימייל לקוח" id="email" isError={this.state.errors.includes('email') ? true : false} />
-                                    <InputRow handleInputChange={ this.handleInputChange } label="סוג שינה" id="sleep" isError={this.state.errors.includes('sleep') ? true : false} />
+                                    <InputRow handleInputChange={ this.handleInputChange } label="סוג לינה" id="sleep" isError={this.state.errors.includes('sleep') ? true : false} />
                                     <MapInput handleMapChange={ this.handleMapChange } label="כתובת התייצבות" id="address" isError={this.state.errors.includes('address') ? true : false}/>
                                 </div>
                                 <div className="seperator"></div>

@@ -5,9 +5,6 @@ class HomeTrips extends Component {
         super(props)
     }
 
-    componentDidMount() {
-        console.log(this.props.trips)
-    }
     render() {
         return(
             <>

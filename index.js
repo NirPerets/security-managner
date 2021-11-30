@@ -13,6 +13,7 @@ const schedule      = require('node-schedule')
 const path          = require('path')
 
 require('dotenv').config();
+const verifyToken = require('./Middleware/authJWT')
 
 const mongoose = require('mongoose')
 const User = mongoose.model('User')
@@ -44,7 +45,7 @@ app.use(session({
 app.use(passport.initialize())
 app.use(passport.session())
 
-app.use(express.static(path.join(__dirname, "./client/build")))
+//app.use(express.static(path.join(__dirname, "./client/build")))
 
 /* ================== PASSPORT =========================== */
 
@@ -65,6 +66,11 @@ app.post('/register', async (req, res) => {
 
   if(exists) {
     res.send({message: 'User already exists'})
+    return
+  }
+
+  if(req.body.key != 'yahavkey') {
+    res.send({message: 'Wrong Key'})
     return
   }
 
@@ -99,36 +105,43 @@ app.post('/login', async (req, res) => {
   const { username, password } = req.body;
   const user = await User.findOne({ username : username });
 
-  await bcrypt.compare(password, user.password, (err, result) => {
-    if (err) res.status(400).send()
-    else {
-      if (user) {
-        // Create token
-        const token = jwt.sign(
-          { user_id: user._id, username },
-          process.env.TOKEN_KEY,
-          {
-            expiresIn: "2h",
+  if(user != null) {
+      await bcrypt.compare(password, user.password, (err, result) => {
+        if (err) res.status(400).send()
+        else {
+          if (user && result) {
+            // Create token
+            const token = jwt.sign(
+              { user_id: user._id, username },
+              process.env.TOKEN_KEY,
+              {
+                expiresIn: "2h",
+              }
+            );
+        
+            // save user token
+            user.token = token;
+        
+            // user
+            res.status(200).json(user)
+          } else {
+            res.status(400).send("Invalid Credentials");
           }
-        );
-    
-        // save user token
-        user.token = token;
-    
-        // user
-        res.status(200).json(user)
-      } else {
-        res.status(400).send("Invalid Credentials");
-      }
-    }
-  })
-
+        }
+      })
+  } else {
+    return res.status(303).send()
+  }
 })
 
 /* ================== Routes =========================== */
 
 app.get('/', (req, res) => {res.sendFile(path.join(__dirname, './client/build', 'index.html')) })
 app.get('*', (req, res) => res.sendFile(path.resolve('./client/build', 'index.html')))
+
+app.post('/logged_in', verifyToken, (req, res) => {
+  return res.status(200).send()
+})
 
 app.listen(port, () => {
   mongoose.connect('mongodb+srv://turismo:9976406@turismo.edfha.mongodb.net/Turismo?retryWrites=true&w=majority', {
@@ -142,10 +155,6 @@ app.listen(port, () => {
   }
   })
   console.log(`Example app listening at http://localhost:${port}`)
-})
-
-app.post('/register', (req, res) => {
-  console.log(req.body)
 })
 
 /* ===================== SHECDULED ===================== */

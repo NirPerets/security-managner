@@ -53,7 +53,6 @@ class WorkerLogin extends Component {
 
         fetch('/worker/login', requestOptions)
         .then(async response => {
-            console.log(response.status)
             if(response.status == '403') return this.setState({ 
                 error: 'עובד לא קיים או פרטים שגויים',
                 showError: true,
@@ -64,9 +63,10 @@ class WorkerLogin extends Component {
 
             if(data != null) {
                 this.props.setUser(data)
-                window.location.href = "/worker/home"
+                localStorage.setItem('worker', data._id)
+                window.location.href = "/worker"
             } else {
-                this.setState({ error: 'עובד לא קיים או פרטים שגויים'})
+                this.setState({ error: 'עובד לא קיים או פרטים שגויים', showError: true})
             }
         })
     }

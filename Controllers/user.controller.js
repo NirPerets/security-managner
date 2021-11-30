@@ -7,6 +7,7 @@ const Worker = mongoose.model('Worker')
 const Trip = mongoose.model('Trip')
 var axios = require('axios');
 const sendSMS = require('../Functions/sms')
+const deleteSMS = require('../Functions/deleteSMS')
 
 router.post('/:id', auth ,(req, res) => {
     User.findById(req.params.id, (err, user) => {
@@ -84,7 +85,9 @@ router.post('/:id/newWorker', (req, res) => {
     worker.job = req.body.job
     worker.x = req.body.x
     worker.y = req.body.y
-
+    worker.free = false
+    worker.acceptedTrips = []
+    
     worker.save((err, worker) => {
         if(!err) {
             User.updateOne(
@@ -129,7 +132,6 @@ router.post('/:id/deleteWorker', async (req, res) => {
 
 
 router.post('/:id/deleteTrip', (req, res) => {
-    console.log(req.body.id)
     User.updateOne(
         { _id : req.params.id },
         { $pull: {trips : req.body.id }},
@@ -138,17 +140,20 @@ router.post('/:id/deleteTrip', (req, res) => {
             if(err) res.status(403).send()
             else {
                 const trip = await Trip.findOne({ _id : req.body.id })
-                trip.guards.forEach(guard => {
+                trip.guards.forEach(async guard => {
+                    await deleteSMS(trip, await Worker.findOne({ id : guard }))
                     Worker.updateOne(
                         { _id: guard },
                         { $pull: { trips : mongoose.Types.ObjectId(req.body.id) }},
                         { multi: false },
-                        err => {
+                        (err, result2) => {
+                            console.log(result2)
                             if(err) console.log(err)
                         }
                     )
                 })
-                trip.medics.forEach(medic => {
+                trip.medics.forEach(async medic => {
+                    await deleteSMS(trip, await Worker.findOne({ id : medic }))
                     Worker.updateOne(
                         { _id: medic },
                         { $pull: { trips : mongoose.Types.ObjectId(req.body.id) }},

@@ -14,7 +14,12 @@ class WorkerConsole extends Component {
     }
     
     getWorkerInfo = async () => {
-        const response = await fetch('/worker/' + localStorage.getItem('user') );
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+        };
+
+        const response = await fetch(('/worker/' + localStorage.getItem('worker')), requestOptions);
         const data = await response.json();
     
         if (response.status !== 200) {
