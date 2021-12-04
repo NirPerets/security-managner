@@ -98,8 +98,8 @@ class WorkerList extends Component {
                             <tr>
                                 <th>שם העובד</th>
                                 <th>סטטוס</th>
-                                <th>מספר שעות</th>
                                 <th>כתובת</th>
+                                <th>מספר טיולים</th>
                                 <th>פלאפון</th>
                             </tr>
                         </thead>
@@ -110,8 +110,8 @@ class WorkerList extends Component {
                                         <tr className={ item.free ? 'free' : item.status ? 'active' : ''} onClick={ () => this.openWorkerModal(item,"מאבטח") }>
                                             <td>{ item.fullName }</td>
                                             <td>{ item.free ? 'בחופש' : item.status ? 'בעבודה' : 'פנוי' }</td>
-                                            <td>{ item.trips.length  }</td>
                                             <td>{ item.address }</td>
+                                            <td>{ item.trips.length  }</td>
                                             <td>{ item.phone }</td>
                                         </tr>
                                     )
@@ -125,8 +125,8 @@ class WorkerList extends Component {
                                         <tr className={ item.free ? 'free' : item.status ? 'active' : '' } onClick={ () => this.openWorkerModal(item,"חובש") }>
                                             <td>{ item.fullName }</td>
                                             <td>{ item.status ? 'בעבודה' : 'פנוי' }</td>
-                                            <td>{ item.trips.length }</td>
                                             <td>{ item.address }</td>
+                                            <td>{ item.trips.length }</td>
                                             <td>{ item.phone }</td>
                                         </tr>
                                     )

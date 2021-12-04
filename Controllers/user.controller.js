@@ -140,23 +140,24 @@ router.post('/:id/deleteTrip', (req, res) => {
             if(err) res.status(403).send()
             else {
                 const trip = await Trip.findOne({ _id : req.body.id })
-                trip.guards.forEach(async guard => {
-                    await deleteSMS(trip, await Worker.findOne({ id : guard }))
+                await trip.guards.forEach(async guard => {
+                    let worker = await Worker.findOne({ _id : guard })
+                    await deleteSMS(trip, worker)
                     Worker.updateOne(
                         { _id: guard },
-                        { $pull: { trips : mongoose.Types.ObjectId(req.body.id) }},
+                        { $pull: { trips : mongoose.Types.ObjectId(req.body.id), acceptedTrips: mongoose.Types.ObjectId(req.body.id) }},
                         { multi: false },
-                        (err, result2) => {
-                            console.log(result2)
+                        (err) => {
                             if(err) console.log(err)
                         }
                     )
                 })
-                trip.medics.forEach(async medic => {
-                    await deleteSMS(trip, await Worker.findOne({ id : medic }))
+                await trip.medics.forEach(async medic => {
+                    let worker2 = await Worker.findOne({ _id : medic })
+                    await deleteSMS(trip, worker2)
                     Worker.updateOne(
                         { _id: medic },
-                        { $pull: { trips : mongoose.Types.ObjectId(req.body.id) }},
+                        { $pull: { trips : mongoose.Types.ObjectId(req.body.id), acceptedTrips: mongoose.Types.ObjectId(req.body.id) }},
                         { multi: false },
                         err => {
                             if(err) console.log(err)
@@ -273,7 +274,7 @@ router.post('/:id/getWorkerTrips', (req, res) => { // GET SPECIFIC WORKER TRIPS
                 Promise.all(worker.trips.map(trip => {
                     return Trip.findOne({ _id : trip}).exec()
                 })).then(foundTrips => {
-                    res.status(200).send(foundTrips)
+                    return res.status(200).send(foundTrips)
                 })
             }
         }
@@ -301,7 +302,6 @@ router.post('/:id/:trip', async (req, res) => {
             { $push: { trips: mongoose.Types.ObjectId(req.params.trip) }},
             (err, res) => {
                 if(err) return res.status(403).send('error')
-                else console.log(res)
             }
         )
     })

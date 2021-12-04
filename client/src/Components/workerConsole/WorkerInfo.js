@@ -3,12 +3,14 @@ import iconCheck from "../../Icons/iconCheck";
 
 class WorkerInfo extends Component {
 
+    state = {
+        update: false
+    }
+
     componentDidMount() {
-        console.log(this.props.worker)
     }
 
     acceptTrip = async (trip) => {
-        console.log(trip._id)
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -19,7 +21,7 @@ class WorkerInfo extends Component {
 
         const response = await fetch(('/worker/' + localStorage.getItem('worker') + '/acceptTrip'), requestOptions);
         const data = await response.json();
-        console.log(data)
+        this.setState({ update: true })
     }
 
     render() {

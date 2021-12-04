@@ -159,7 +159,7 @@ app.listen(port, () => {
 
 /* ===================== SHECDULED ===================== */
 
-const updateTripStatus = schedule.scheduleJob('0 0 * * *', async () => {
+schedule.scheduleJob('0 0 * * *', async () => {
   const today = new Date()
 
   await Trip.find({}, (err, trips) => {

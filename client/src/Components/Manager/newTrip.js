@@ -53,10 +53,10 @@ class newTrip extends Component {
             if(this.state.class === "") {errors.push('class')}
             if(this.state.city === "") { errors.push('city') }
             if(this.state.address === "") {errors.push('address')}
-            if(this.state.area === "") {errors.push('area')}
+            if(this.state.area === "") {errors.push('area')}*/
             if(this.state.startDate === "") {errors.push('startDate')}
             if(this.state.finishDate === "") {errors.push('finishDate')}
-            if(this.state.hour === "") {errors.push('hour')}
+            /*if(this.state.hour === "") {errors.push('hour')}
             if(this.state.meetAddress === "") {errors.push('meetAddress')}
             if(this.state.meetAddress === "") {errors.push('contact')}
             if(this.state.sleep === "") {errors.push('sleep')}
@@ -280,7 +280,7 @@ class newTrip extends Component {
             <>
                 <div className="page-heading">
                     <h1>הוספת טיול חדש</h1>
-                    <Link to="/trips">לרשימת הטיולים</Link>
+                    <Link to="/manager/trips">לרשימת הטיולים</Link>
                 </div>
                 <div className="form-container">
                     <div className={"progress currentStage" + this.state.stage}>
@@ -307,7 +307,7 @@ class newTrip extends Component {
                                 </div>
                                 <div className="seperator"></div>
                                 <div className="left">
-                                    <InputRow handleInputChange={ this.handleInputChange } label="איזור טיול" id="area" isError={this.state.errors.includes('area') ? true : false} />
+                                    <InputRow handleInputChange={ this.handleInputChange } label="איזור הטיול" id="area" isError={this.state.errors.includes('area') ? true : false} />
                                     <InputRow handleInputChange={ this.handleInputChange } label="תאריך התחלה" id="startDate" isError={this.state.errors.includes('startDate') ? true : false} />
                                     <InputRow handleInputChange={ this.handleInputChange } label="תאריך סיום" id="finishDate" isError={this.state.errors.includes('finishDate') ? true : false} />
                                     <InputRow handleInputChange={ this.handleInputChange } label="שעת התייצבות" id="hour" isError={this.state.errors.includes('hour') ? true : false} />

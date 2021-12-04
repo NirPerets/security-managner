@@ -10,7 +10,7 @@ function sendSMS(trip, worker) {
         </User>
         <Content Type="sms">
             <Message>
-                שלום ${ worker.fullName }, הנך משובץ לטיול ${ trip.body } בתפקיד ${ worker.job == 'guard' ? 'מאבטח' : 'חובש' } עם ${ trip.school}. בתאריכים ${ trip.startDate } - ${ trip.finishDate }, הלינה היא ${ trip.sleep } איש קשר: ${ trip.contact } כתובת התייצבות: ${ trip.address } בשעה ${ trip.hour } יש להיכנס לקישור https://turismo-israel.herokuapp.com/ ולאשר הגעה
+                שלום ${ worker.fullName }, הנך משובץ לטיול ${ trip.body } בתפקיד ${ worker.job == 'guard' ? 'מאבטח מע"ר' : 'חובש' } עם ${ trip.school}. בתאריכים ${ trip.startDate } - ${ trip.finishDate }, הלינה היא ${ trip.sleep } כתובת התייצבות: ${ trip.address } בשעה ${ trip.hour } איש קשר: ${ trip.contact } https://turismo-israel.herokuapp.com/ לאישור
             </Message>
         </Content>
         <Recipients>

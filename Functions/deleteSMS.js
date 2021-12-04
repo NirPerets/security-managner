@@ -1,6 +1,7 @@
 var axios = require('axios');
 
 function deleteSMS(trip, worker) {
+    console.log(worker)
     const url = 'http://uapi.upsend.co.il/SendMessageXml.ashx'
     var xmlBody = `
     <Inforu>
@@ -10,7 +11,7 @@ function deleteSMS(trip, worker) {
         </User>
         <Content Type="sms">
             <Message>
-                שלום ${ worker.fullName }, הטיול ששובצתה אליו ${ trip.body } בתפקיד ${ worker.job == 'guard' ? 'מאבטח' : 'חובש' } עם ${ trip.school}. בתאריכים ${ trip.startDate } - ${ trip.finishDate }, בוטל.
+                שלום ${ worker.fullName }, הטיול ששובצתה אליו ${ trip.body } בתפקיד ${ worker.job == 'guard' ? 'מאבטח מע"ר' : 'חובש' } עם ${ trip.school}. בתאריכים ${ trip.startDate } - ${ trip.finishDate }, בוטל.
             </Message>
         </Content>
         <Recipients>

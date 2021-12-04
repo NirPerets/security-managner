@@ -64,7 +64,11 @@ class WorkerModal extends Component {
         }
 
         fetch(('/worker/' + this.props.worker._id + '/free'), requestOptions)
-        .then(response => this.setState({showLoading: false}))
+        .then(response => {
+            this.setState({showLoading: false})
+            this.props.closeModal()
+            window.location.reload(false)
+        })
     }
 
     setWorkerToWork = () => {
@@ -75,7 +79,11 @@ class WorkerModal extends Component {
         }
 
         fetch(('/worker/' + this.props.worker._id + '/towork'), requestOptions)
-        .then(response => this.setState({showLoading: false}))
+        .then(response => {
+            this.setState({showLoading: false})
+            this.props.closeModal()
+            window.location.reload(false)
+        })
     }
 
     componentDidMount() {
@@ -143,6 +151,7 @@ class WorkerModal extends Component {
                             </thead>
                             <tbody>
                                 {
+                                    this.state.trips != null ?
                                     this.state.trips.map(trip => {
                                         return(
                                             <tr>
@@ -152,7 +161,7 @@ class WorkerModal extends Component {
                                                 <td>{ trip.area }</td>
                                             </tr>
                                         )
-                                    })
+                                    }) : <></>
                                 }
                             </tbody>
                         </table>

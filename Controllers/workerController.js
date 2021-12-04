@@ -56,7 +56,6 @@ router.post('/:id/acceptTrip', (req, res) => {
         (err, result) => {
             if(err) console.log(err)
             else {
-                console.log(result)
                 return res.status(200).send()
             }
         }
