@@ -164,10 +164,11 @@ router.post('/:id/deleteTrip', (req, res) => {
                         }
                     )
                 })
-                Trip.remove({ _id: req.body.id }, (err, result) => {
+                await Trip.remove({ _id: req.body.id }, (err, result) => {
                     if(err) return res.status(403)
                 })
-                res.status(200).send()
+                
+                return res.status(200).send()
             } 
         }
     )
