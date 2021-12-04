@@ -167,7 +167,7 @@ router.post('/:id/deleteTrip', (req, res) => {
                 await Trip.remove({ _id: req.body.id }, (err, result) => {
                     if(err) return res.status(403)
                 })
-                
+
                 return res.status(200).send()
             } 
         }
@@ -202,7 +202,7 @@ router.post('/:id/getTrips', (req, res) => {
     User.findById(
         req.params.id,
         (err, user) => {
-            if(!err) {
+            if(!err && user != null) {
                 Promise.all(user.trips.map(trip => {
                     return Trip.findOne({ _id : trip }).exec()
                 })).then(foundTrips => {

@@ -22,6 +22,7 @@ class WorkerInfo extends Component {
         const response = await fetch(('/worker/' + localStorage.getItem('worker') + '/acceptTrip'), requestOptions);
         const data = await response.json();
         this.setState({ update: true })
+        window.location.reload(false)
     }
 
     render() {
